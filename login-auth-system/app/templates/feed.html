@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .post {
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+        }
+        .post:last-child {
+            border-bottom: none;
+        }
+        .post .author {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .post .timestamp {
+            font-size: 12px;
+            color: #666;
+        }
+        .post .content {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        .new-post {
+            margin-bottom: 20px;
+        }
+        .new-post textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+        .new-post button {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .new-post button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- New Post Form -->
+        <div class="new-post">
+            <form action="/create_post" method="POST">
+                <textarea name="content" rows="4" placeholder="What's on your mind?" required></textarea>
+                <button type="submit">Post</button>
+            </form>
+        </div>
+
+        <!-- Posts -->
+        {% for post in posts %}
+        <div class="post">
+            <div class="author">{{ post.name }} {{ post.lastname }}</div>
+            <div class="timestamp">{{ post.created_at }}</div>
+            <div class="content">{{ post.content }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
