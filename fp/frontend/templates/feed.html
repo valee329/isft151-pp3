@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .post {
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+        }
+        .post:last-child {
+            border-bottom: none;
+        }
+        .post .author {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .post .timestamp {
+            font-size: 12px;
+            color: #666;
+        }
+        .post .content {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        .new-post {
+            margin-bottom: 20px;
+        }
+        .new-post textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+        .new-post button {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+        }
+        .new-post button:hover {…}
+
+        /* Added top bar styles */
+        .top-bar {
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:10px 20px;
+            background:#ffffff;
+            box-shadow:0 2px 4px rgba(0,0,0,0.1);
+            position:sticky;
+            top:0;
+            z-index:10;
+        }
+        .top-bar .logo {
+            font-weight:bold;
+            font-size:18px;
+            color:#007bff;
+        }
+        .top-bar .actions {
+            display:flex;
+            align-items:center;
+            gap:12px;
+            font-size:14px;
+        }
+        .top-bar .actions .welcome { color:#333; }
+        .top-bar a.btn-profile,
+        .top-bar a.btn-logout {
+            text-decoration:none;
+            padding:6px 14px;
+            border-radius:20px;
+            background:#007bff;
+            color:#fff;
+            font-size:13px;
+        }
+        .top-bar a.btn-logout { background:#dc3545; }
+        .top-bar a.btn-profile:hover { background:#0056b3; }
+        .top-bar a.btn-logout:hover { background:#b52a36; }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="logo">OnlyFood</div>
+        <div class="actions">
+            <span class="welcome">{{ session['user_name'] }}</span>
+            <a href="/profile" class="btn-profile">Profile</a>
+            <a href="/logout" class="btn-logout">Logout</a>
+        </div>
+    </div>
+    <div class="container">
+        <!-- New Post Form -->
+        <div class="new-post">
+            <form method="POST" action="/create_post">
+                <textarea name="content" rows="3" placeholder="What's on your mind?" required></textarea>
+                <button type="submit">Post</button>
+            </form>
+        </div>
+
+        <!-- Posts -->
+        {% for post in posts %}
+        <div class="post">
+            <div class="author">{{ post.name }} {{ post.lastname }}</div>
+            <div class="timestamp">{{ post.created_at }}</div>
+            <div class="content">{{ post.content }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

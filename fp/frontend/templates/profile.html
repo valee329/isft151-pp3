@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Complete Profile</title>
+<style>
+ body {font-family: Arial,sans-serif;background:#f4f4f9;margin:0;display:flex;justify-content:center;align-items:center;height:100vh;}
+ .container {background:#fff;padding:30px;border-radius:10px;box-shadow:0 4px 8px rgba(0,0,0,.2);width:100%;max-width:450px;}
+ h1 {text-align:center;margin-top:0;}
+ form {display:flex;flex-direction:column;}
+ textarea, input {margin-bottom:15px;padding:10px;border:1px solid #ccc;border-radius:5px;}
+ button {padding:10px;background:#007bff;color:#fff;border:none;border-radius:5px;cursor:pointer;}
+ button:hover {background:#0056b3;}
+ .error-messages {color:red;text-align:center;margin-bottom:10px;}
+</style>
+</head>
+<body>
+ <div class="container">
+   <h1>Complete Your Profile</h1>
+   <form method="POST" action="/complete_profile">
+     <textarea name="bio" rows="4" placeholder="Short bio (optional)"></textarea>
+     <input type="text" name="location" placeholder="Location (optional)">
+     <input type="text" name="avatar_url" placeholder="Avatar image URL (optional)">
+     <button type="submit">Save Profile</button>
+   </form>
+   <div class="error-messages">
+     {% with messages = get_flashed_messages() %}
+       {% if messages %}
+         <ul>
+           {% for message in messages %}
+             <li>{{ message }}</li>
+           {% endfor %}
+         </ul>
+       {% endif %}
+     {% endwith %}
+   </div>
+ </div>
+</body>
+</html>
