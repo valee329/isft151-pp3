@@ -63,6 +63,16 @@
    <div class="actions">
      <a href="/complete_profile">Update Profile</a>
    </div>
+
+   <div class="section delete-section">
+    <h2>Account Management</h2>
+    <form action="/delete_profile" method="POST" onsubmit="return confirm(' WARNING: Are you absolutely sure you want to permanently delete your account and you profile. This action cannot be undone.');">
+        <button type="submit" class="delete-button">
+            Delete My Account Permanently
+        </button>
+    </form>
+    </div>
+
    {% else %}
      <p>No user data found.</p>
    {% endif %}

@@ -1,3 +1,4 @@
+import re
 from flask import render_template, request, redirect, session, flash
 from models import rows_to_posts  # Using Post model for the feed list
 
@@ -52,10 +53,22 @@ def register_routes(app, get_db_connection, user_has_profile):
             lastname = request.form.get('txtLastname')
             role = request.form.get('txtRole')
             password = request.form.get('txtPassword')
+            confirm_password = request.form.get('txtConfirmPassword') 
 
-            if not all([name, lastname, role, password]):
+            if not all([name, lastname, role, password, confirm_password]):
                 flash('All fields required.')
                 return render_template('register.html')
+
+            validation_errors = validate_password_requirements(password, confirm_password)
+
+            if validation_errors:
+                # Si hay errores, flashea cada uno y vuelve a mostrar el formulario.
+                for error in validation_errors:
+                    flash(error, 'error')
+                return render_template('register.html', 
+                    name=name, 
+                    lastname=lastname, 
+                    role=role) 
 
             conn = get_db_connection()
             if not conn:
@@ -213,3 +226,65 @@ def register_routes(app, get_db_connection, user_has_profile):
     def logout():
         session.clear()
         return redirect('/')
+    
+    @app.route('/delete_profile', methods=['POST'])
+    def delete_profile():
+        if not session.get('logged_in'):
+            flash('You must be logged in to delete your profile.')
+            return redirect('/')
+        
+        user_id = session.get('user_id')
+        
+        conn = get_db_connection()
+        if not conn:
+            flash('DB connection error.')
+            return redirect('/profile')
+
+        cur = conn.cursor()
+        try:
+            # El comando DELETE único que eliminará todos los datos relacionados si usas ON DELETE CASCADE.
+            cur.execute("DELETE FROM user WHERE id = %s", (user_id,))
+            conn.commit()
+            
+            session.clear()
+            flash('Your account has been successfully deleted.')
+            return redirect('/')
+        
+        except Exception as e:
+            print(f"Delete profile error: {e}")
+            flash('An error occurred while deleting the profile.')
+            return redirect('/profile')
+        
+        finally:
+            cur.close()
+            conn.close()
+    
+
+def validate_password_requirements(password, confirm_password):
+    #Verifica si la contraseña cumple con los requisitos y si coincide con la confirmación.
+        errors = []
+        
+        # Requisitos
+        MIN_LENGTH = 8
+       
+        REQUIRES_UPPER = re.compile(r'[A-Z]')
+        REQUIRES_LOWER = re.compile(r'[a-z]')
+        REQUIRES_DIGIT = re.compile(r'\d')
+        REQUIRES_SPECIAL = re.compile(r'[!@#$%^&*()_+={}\[\]:;"\'<,>.?/\\|]') # Opcional: Caracter especial
+
+        if len(password) < MIN_LENGTH:
+            errors.append(f"La contraseña debe tener al menos {MIN_LENGTH} caracteres.")
+
+        if not REQUIRES_UPPER.search(password):
+            errors.append("Debe contener al menos una letra mayúscula (A-Z).")
+
+        if not REQUIRES_LOWER.search(password):
+            errors.append("Debe contener al menos una letra minúscula (a-z).")
+            
+        if not REQUIRES_DIGIT.search(password):
+            errors.append("Debe contener al menos un número (0-9).")
+        
+        if password != confirm_password:
+            errors.append("Las contraseñas ingresadas no coinciden.")
+            
+        return errors
