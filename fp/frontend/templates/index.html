@@ -1,123 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 400px;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        input {
-            margin-bottom: 15px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .captcha-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 15px;
-        }
-        .captcha {
-            font-size: 18px;
-            font-weight: bold;
-            background-color: #e9ecef;
-            padding: 10px;
-            border-radius: 5px;
-            text-align: center;
-            width: 100px;
-        }
-        .error-messages {
-            color: red;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-    </style>
-    <script>
-        // Generate a random CAPTCHA
-        function generateCaptcha() {
-            const captcha = Math.random().toString(36).substring(2, 8).toUpperCase();
-            document.getElementById('captcha').innerText = captcha;
-            document.getElementById('captchaValue').value = captcha;
-        }
+<meta charset="UTF-8">
+<title>Login - OnlyFood</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root {
+  --bg1:#0f2027;
+  --bg2:#203a43;
+  --bg3:#2c5364;
+  --accent:#16a34a;        /* darker green */
+  --accent-hover:#15803d;  /* darker hover */
+  --error:#e74c3c;
+  --text:#eef3f5;
+  --muted:#b8c4cc;
+  --radius:18px;
+  --trans:160ms ease;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif;
+  color-scheme: dark;
+}
+*{box-sizing:border-box;}
+body {
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:34px 20px;
+  background:linear-gradient(140deg,var(--bg1),var(--bg2),var(--bg3));
+  background-attachment:fixed;
+  color:var(--text);
+}
+.login-shell {
+  width:100%;
+  max-width:430px;
+  position:relative;
+}
+.card {
+  position:relative;
+  backdrop-filter: blur(22px) saturate(170%);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.18);
+  padding:46px 42px 38px;
+  border-radius:var(--radius);
+  box-shadow:0 10px 32px -6px rgba(0,0,0,.55),0 2px 6px rgba(0,0,0,.45);
+  animation: fadeIn .5s ease;
+}
+@keyframes fadeIn {
+  from {opacity:0; transform:translateY(14px);}
+  to {opacity:1; transform:translateY(0);}
+}
+.brand {
+  text-align:center;
+  font-size:2rem;
+  font-weight:700;
+  letter-spacing:.5px;
+  margin:0 0 8px;
+  /* darker solid title */
+  color:#0f2e1f;
+}
+.subtitle {
+  text-align:center;
+  margin:0 0 28px;
+  font-size:.9rem;
+  color:var(--muted);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+form {display:flex;flex-direction:column;gap:18px;}
+.field {display:flex;flex-direction:column;gap:6px;}
+.field label {
+  font-size:.75rem;
+  font-weight:600;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+input {
+  background:rgba(255,255,255,0.10);
+  border:1px solid rgba(44, 41, 41, 0.25);
+  color:var(--text);
+  padding:13px 14px;
+  font-size:.95rem;
+  border-radius:12px;
+  outline:none;
+  transition:var(--trans);
+}
+input:hover {border-color:rgba(49, 46, 46, 0.4);}
+input:focus {
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(22,163,74,.35); /* darker focus ring */
+}
+.captcha-row {
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.captcha-box {
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#f0fdf4;
+  border:1px solid #bbf7d0;
+  border-radius:12px;
+  font-weight:700;
+  letter-spacing:3px;
+  font-size:1rem;
+  color:#065f46;
+  min-height:46px;
+  user-select:none;
+}
+/* disable the dark overlay that reduced contrast */
+.captcha-box::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:none;
+  pointer-events:none;
+}
+.refresh-btn {
+  padding:10px 12px;
+  border:none;
+  border-radius:10px;
+  background:#16a34a;
+  color:#fff;
+  cursor:pointer;
+  font-weight:700;
+}
+.refresh-btn:hover {background:#15803d;}
+.refresh-btn:active {transform:scale(.92);}
+.btn-primary {
+  margin-top:4px;
+  background:linear-gradient(90deg,var(--accent),#2aa460); /* darker primary button */
+  border:none;
+  padding:15px 18px;
+  font-size:.98rem;
+  font-weight:600;
+  border-radius:14px;
+  cursor:pointer;
+  display:inline-flex;
+  justify-content:center;
+  gap:8px;
+  letter-spacing:.4px;
+  color:#fff;
+  position:relative;
+  overflow:hidden;
+  transition:var(--trans);
+}
+.btn-primary::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,rgba(255,255,255,0.3),rgba(255,255,255,0));
+  opacity:0;
+  transition:var(--trans);
+}
+.btn-primary:hover {
+  transform:translateY(-2px);
+  box-shadow:0 8px 22px -6px rgba(0,0,0,.55);
+}
+.btn-primary:hover::after {opacity:.45;}
+.btn-primary:active {
+  transform:translateY(0);
+  box-shadow:0 4px 14px -4px rgba(0,0,0,.65);
+}
+.flash {
+  background:rgba(231,76,60,0.12);
+  border:1px solid rgba(231,76,60,0.45);
+  color:var(--error);
+  padding:10px 14px;
+  border-radius:10px;
+  font-size:.8rem;
+  line-height:1.3;
+  animation:fadeIn .4s ease;
+}
+.alt {
+  margin-top:24px;
+  text-align:center;
+  font-size:.8rem;
+  color:var(--muted);
+}
+.alt a {
+  color:#b8ffe0;
+  text-decoration:none;
+  font-weight:600;
+  transition:var(--trans);
+}
+.alt a:hover {color:#ffffff;}
+footer {
+  margin-top:20px;
+  text-align:center;
+  font-size:.6rem;
+  letter-spacing:.15em;
+  opacity:.55;
+}
+@media (max-width:560px){
+  .card {padding:40px 28px 34px;}
+  .brand {font-size:1.75rem;}
+}
+/* theme overrides */
+body{background:#ffffff;color:#17353a;}
+a{color:#1ea34f}
+input,select,textarea{border-color:#cfe9d8}
 
-        // Call generateCaptcha on page load
-        window.onload = generateCaptcha;
-    </script>
+/* NEW: ensure readable input text on white theme */
+:root{
+  /* override dark defaults for this page */
+  --text:#17353a;         /* dark text */
+  --muted:#587a68;        /* muted labels */
+  color-scheme: light;    /* avoid dark UA styles */
+}
+input,select,textarea{
+  background:#ffffff !important;
+  color:#0f2e1f !important;      /* darker input text */
+  border:1px solid #cfe9d8 !important;
+  caret-color:#0f2e1f;
+}
+input::placeholder,
+textarea::placeholder{
+  color:#6b7280;                 /* readable placeholder */
+  opacity:1;                     /* avoid extra fading */
+}
+input:hover,select:hover,textarea:hover{
+  border-color:#a7d8bd;
+}
+input:focus,select:focus,textarea:focus{
+  outline:2px solid #bbf7d0;
+  border-color:#86efac !important;
+  box-shadow:none;
+}
+
+/* keep darker buttons */
+button,.btn{background:#16a34a;color:#fff;border:none}
+button:hover,.btn:hover{background:#15803d}
+.card,.panel{background:#fff;border:1px solid #e6f3ea;box-shadow:0 8px 24px rgba(16,24,40,.06)}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>Login</h1>
-        <form action="/login" method="POST">
-            <input type="text" name="txtName" placeholder="Name" required>
-            <input type="text" name="txtLastname" placeholder="Lastname" required>
-            <input type="password" name="txtPassword" placeholder="Password" required>
+  <div class="login-shell">
+    <div class="card">
+      <h1 class="brand">OnlyFood</h1>
+      <p class="subtitle">Sign In</p>
 
-            <!-- CAPTCHA -->
-            <div class="captcha-container">
-                <div id="captcha" class="captcha"></div>
-                <input type="text" name="captchaInput" placeholder="Enter CAPTCHA" required>
-            </div>
-            <input type="hidden" id="captchaValue" name="captchaValue">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for m in messages %}
+            <div class="flash">{{ m }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
 
-            <button type="submit">Login</button>
-        </form>
-
-        <!-- Display error messages -->
-        <div class="error-messages">
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    <ul>
-                        {% for message in messages %}
-                            <li>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            {% endwith %}
+      <form method="POST" action="/login" novalidate>
+        <div class="field">
+          <label for="firstName">First Name</label>
+          <input id="firstName" name="txtName" placeholder="Your first name" required autocomplete="given-name">
+        </div>
+        <div class="field">
+          <label for="lastName">Last Name</label>
+            <input id="lastName" name="txtLastname" placeholder="Your last name" required autocomplete="family-name">
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" name="txtPassword" type="password" placeholder="••••••••" required autocomplete="current-password">
         </div>
 
-        <!-- Registration link -->
-        <div class="auth-options">
-            <p>Don't have an account? <a href="/register">Register here</a></p>
+        <div class="captcha-row">
+          <div class="captcha-box">
+            <span id="captchaCode">{{ captcha_code }}</span>
+          </div>
+          <button type="button" class="refresh-btn" onclick="refreshCaptcha()" aria-label="Refresh captcha">↻</button>
         </div>
+
+        <div class="field">
+          <label for="captcha_input">Enter code</label>
+          <input id="captcha_input" name="captcha_input" placeholder="Type the code shown" autocomplete="off" required>
+        </div>
+
+        <button type="submit" class="btn-primary">Login</button>
+      </form>
+
+      <div class="alt">
+        Need an account?
+        <a href="/register">Create one</a>
+      </div>
     </div>
+    <footer>&copy; 2025 OnlyFood</footer>
+  </div>
+<script>
+function refreshCaptcha(){
+  fetch('/captcha-refresh', { headers:{'Accept':'application/json'}, cache:'no-store' })
+    .then(r=> r.ok ? r.json() : Promise.reject(r.status))
+    .then(d=>{
+      const el=document.getElementById('captchaCode');
+      if(el){ el.textContent = d.code || ''; }
+    })
+    .catch(()=>{});
+}
+</script>
 </body>
 </html>

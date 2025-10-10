@@ -1,120 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 400px;
-        }
-        .logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .logo img {
-            max-width: 150px;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        p {
-            text-align: center;
-            color: #666;
-            margin-bottom: 20px;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        input, select {
-            margin-bottom: 15px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-        button {
-            padding: 10px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        .back-to-login {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .back-to-login a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        .back-to-login a:hover {
-            text-decoration: underline;
-        }
-        .error-messages {
-            color: red;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Register - OnlyFood</title>
+<style>
+body {font-family:Arial, sans-serif;background:#f6fef8;margin:0;display:flex;justify-content:center;align-items:center;height:100vh;}
+.container {max-width:420px;margin:60px auto;background:#ffffff;padding:26px;border-radius:10px;box-shadow:0 8px 24px rgba(16,24,40,.06);border:1px solid #e6f3ea;}
+h1 {margin:0 0 12px;font-size:22px;text-align:center;color:#0f2e1f;}
+input, select {width:100%;padding:10px;margin:6px 0;border:1px solid #cfe9d8;border-radius:8px;font-size:14px;background:#fff;color:#17353a;}
+input:focus, select:focus{outline:2px solid #bbf7d0;border-color:#86efac;}
+button {width:100%;padding:12px;margin-top:10px;background:#22c55e;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:15px;font-weight:600;}
+button:hover {background:#1ea34f;}
+.flash {color:#b42318;font-size:13px;margin-bottom:8px;}
+.note {font-size:12px;color:#587a68;margin-top:6px;}
+a{color:#1ea34f}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>Create an Account</h1>
-        <p>Fill in the form below to register a new account.</p>
-        <form action="/register" method="POST">
-            <input type="text" name="txtName" placeholder="First Name" required>
-            <input type="text" name="txtLastname" placeholder="Last Name" required>
-            <select name="txtRole" required>
-                <option value="" disabled selected>Select Role</option>
-                <option value="1">Admin</option>
-                <option value="2">User</option>
-            </select>
-            <input type="password" name="txtPassword" placeholder="Password" required>
-            <input type="password" name="txtConfirmPassword" placeholder="Confirm Password" required>
-            <button type="submit">Register</button>
-        </form>
-
-        <!-- Display error messages -->
-        <div class="error-messages">
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    <ul>
-                        {% for message in messages %}
-                            <li>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            {% endwith %}
-        </div>
-
-        <!-- Back to login -->
-        <div class="back-to-login">
-            <p>Already have an account? <a href="/">Login here</a></p>
-        </div>
+  <div class="container">
+    <h1>Create Account</h1>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for m in messages %}
+          <div class="flash">{{ m }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <form action="/register" method="POST">
+      <input type="text" name="txtName" placeholder="First Name" required>
+      <input type="text" name="txtLastname" placeholder="Last Name" required>
+      <select name="txtRole" required>
+        <option value="" disabled selected>Select Role</option>
+        <option value="1">Vendor</option>
+        <option value="2">User</option>
+      </select>
+      <input type="password" name="txtPassword" placeholder="Password" required>
+      <input type="password" name="txtConfirmPassword" placeholder="Confirm Password" required>
+      <button type="submit">Register</button>
+    </form>
+    <div style="text-align:center;margin-top:12px;">
+      <a href="/">Back to login</a>
     </div>
+  </div>
 </body>
 </html>
