@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Catálogo</title>
+<style>
+body{margin:0;font-family:Arial, sans-serif;background:#ffffff;color:#17353a;}
+header{background:#22c55e;color:#fff;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;}
+header a{color:#fff;text-decoration:none;opacity:.95}
+header a:hover{opacity:1}
+.grid{
+  display:grid;
+  gap:16px;
+  padding:24px;
+  grid-template-columns:repeat(3, minmax(0,1fr));
+}
+@media (max-width: 900px){ .grid{ grid-template-columns:repeat(2, minmax(0,1fr)); } }
+@media (max-width: 600px){ .grid{ grid-template-columns:1fr; } }
+.card{background:#fff;border:1px solid #e6f3ea;border-radius:10px;padding:16px;box-shadow:0 1px 2px rgba(16,24,40,.04);}
+.card h3{margin:0 0 6px;font-size:18px;color:#0f2e1f;}
+.card p{margin:4px 0;font-size:14px;line-height:1.4;color:#334a3f;}
+a.button{display:inline-block;margin-top:8px;background:#22c55e;color:#fff;padding:8px 12px;text-decoration:none;border-radius:6px;font-size:13px;}
+a.button:hover{background:#1ea34f}
+.card .avatar-wrap{display:flex;justify-content:center;margin-bottom:10px;}
+.card .avatar-wrap img{width:96px;height:96px;border-radius:50%;object-fit:cover;border:2px solid #bbf7d0;background:#f0fdf4;}
+.card .avatar-fallback{width:96px;height:96px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#f0fdf4;border:2px solid #bbf7d0;color:#16a34a;font-weight:700;font-size:1.2rem;}
+
+.product-preview {
+    width: 140px;
+    aspect-ratio: 1/1;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f6fef8;
+    border: 2px solid #bbf7d0;
+}
+
+.price {
+    font-size: 1.2em;
+    color: #22c55e;
+    font-weight: bold;
+}
+
+</style>
+</head>
+<body>
+<header>
+  <div><strong>OnlyFood</strong> - Catálogo</div>
+  <nav>
+    <a href="/profile" style="color:#fff;margin-right:14px;">Mi Perfil</a>
+    <a href="/logout" style="color:#fff;">Cerrar Sesión</a>
+  </nav>
+</header>
+
+<main>
+  <div class="container">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for m in messages %}
+          <div class="flash" style="color:#d22;margin:12px 24px;">{{ m }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="header-actions" style="display:flex;justify-content:space-between;align-items:center;margin:20px 0;">
+        <h2>Catálogo</h2>
+        {% if current_user.is_authenticated and current_user.id == vendor_id %}
+        <a href="{{ url_for('catalog.add_product', catalog_id=catalog.id) }}" 
+           class="button">Agregar Producto</a>
+        {% endif %}
+    </div>
+
+    <div class="grid">
+      {% for product in catalog.products %}
+        <div class="card">
+          <div class="avatar-wrap">
+            {% if product.image_url %}
+              <img src="{{ product.image_url }}" alt="{{ product.name }}">
+            {% else %}
+              <div class="avatar-fallback">
+                {{ (product.name or '?')[:1] | upper }}
+              </div>
+            {% endif %}
+          </div>
+          <h3>{{ product.name }}</h3>
+          {% if product.description %}
+            <p>{{ product.description }}</p>
+          {% endif %}
+          <p><strong>Precio: ${{ product.price }}</strong></p>
+        </div>
+      {% else %}
+        <div class="card" style="grid-column:1/-1;text-align:center;">
+          No hay productos en este catálogo.
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</main>
+
+</body>
+</html>
