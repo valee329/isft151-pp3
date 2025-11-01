@@ -40,3 +40,24 @@ INSERT INTO role (description)
 SELECT 'vendor' WHERE NOT EXISTS (SELECT 1 FROM role WHERE description='vendor');
 INSERT INTO role (description)
 SELECT 'user' WHERE NOT EXISTS (SELECT 1 FROM role WHERE description='user');
+
+
+CREATE TABLE IF NOT EXISTS catalog_item (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    price DECIMAL(10,2) DEFAULT 0.00,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE IF NOT EXISTS catalog_item (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    price DECIMAL(10,2) DEFAULT 0.00,
+    image_url VARCHAR(255),
+    vendor_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (vendor_id) REFERENCES user(id) ON DELETE CASCADE
+);

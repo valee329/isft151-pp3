@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+  <head><title>Catálogo</title></head>
+  <body>
+    <h1>Catálogo</h1>
+    <a href="/catalog/create">Crear item</a>
+    <ul>
+      {% for it in items %}
+        <li><a href="/catalog/{{ it.id }}">{{ it.name }}</a> — {{ it.price }}</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

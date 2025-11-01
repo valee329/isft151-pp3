@@ -1,6 +1,6 @@
 import re
 from flask import render_template, request, redirect, session, flash
-from models import rows_to_posts  # Using Post model for the feed list
+'''from models import rows_to_posts  # Using Post model for the feed list'''
 
 def register_routes(app, get_db_connection, user_has_profile):
     """

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ item.name }} - Catalog Item</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ item.name }}</h1>
+        {% if item.image_url %}
+            <img src="{{ url_for('static', filename=item.image_url) }}" alt="{{ item.name }}">
+        {% endif %}
+        <p class="price">${{ item.price }}</p>
+        <p class="description">{{ item.description }}</p>
+        <p class="vendor">Posted by: {{ item.vendor_name }}</p>
+        <p class="date">Created: {{ item.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+        
+        <div class="actions">
+            <a href="/catalog" class="btn">Back to Catalog</a>
+        </div>
+    </div>
+</body>
+</html>
