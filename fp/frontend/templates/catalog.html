@@ -1,13 +1,73 @@
 <!doctype html>
-<html>
-  <head><title>Catálogo</title></head>
-  <body>
-    <h1>Catálogo</h1>
-    <a href="/catalog/create">Crear item</a>
-    <ul>
-      {% for it in items %}
-        <li><a href="/catalog/{{ it.id }}">{{ it.name }}</a> — {{ it.price }}</li>
-      {% endfor %}
-    </ul>
-  </body>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Catálogo</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fafafa;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    .catalog-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      width: 250px;
+      padding: 10px;
+      text-align: center;
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .price {
+      font-weight: bold;
+      color: #4CAF50;
+      margin-top: 5px;
+    }
+    a.btn {
+      background: #4CAF50;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 4px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
+    }
+    a.create-btn {
+      background: #007BFF;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Catálogo de Productos</h1>
+
+  <a href="{{ url_for('catalog_create') }}" class="btn create-btn">+ Crear nuevo producto</a>
+
+  <div class="catalog-container">
+    {% for it in items %}
+      <div class="card">
+        <img src="{{ url_for('static', filename=it.image_url) }}" alt="{{ item.name }}">
+        <h3>{{ it.name }}</h3>
+        <p class="price">${{ it.price }}</p>
+        <a href="{{ url_for('catalog_view', item_id=it.id) }}" class="btn">Ver detalle</a>
+      </div>
+    {% else %}
+      <p>No hay productos cargados todavía.</p>
+    {% endfor %}
+  </div>
+</body>
 </html>

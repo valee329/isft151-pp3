@@ -42,22 +42,25 @@ INSERT INTO role (description)
 SELECT 'user' WHERE NOT EXISTS (SELECT 1 FROM role WHERE description='user');
 
 
-CREATE TABLE IF NOT EXISTS catalog_item (
+
+CREATE TABLE IF NOT EXISTS catalog (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    vendor_id INT NOT NULL,
+    name VARCHAR(100) NOT NULL,
     description TEXT,
-    price DECIMAL(10,2) DEFAULT 0.00,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (vendor_id) REFERENCES user(id)
+        ON DELETE CASCADE
 );
 
-
-CREATE TABLE IF NOT EXISTS catalog_item (
+CREATE TABLE IF NOT EXISTS product (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    catalog_id INT NOT NULL,
     name VARCHAR(255) NOT NULL,
     description TEXT,
     price DECIMAL(10,2) DEFAULT 0.00,
     image_url VARCHAR(255),
-    vendor_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (vendor_id) REFERENCES user(id) ON DELETE CASCADE
+    FOREIGN KEY (catalog_id) REFERENCES catalog(id)
+        ON DELETE CASCADE
 );

@@ -72,10 +72,12 @@ h1{margin:0 0 4px;font-size:1.9rem;color:#0f2e1f;}
       {% endif %}
 
       {% if user.role == 'vendor' %}
-      <div class="profile-actions">
-        <a href="{{ url_for('catalog_create') }}" class="btn">Create Catalog</a>
-      </div>
+        <div class="profile-actions">
+        <a href="{{ url_for('catalog_create') }}" class="button">➕ Create Catalog</a>
+        <a href="{{ url_for('catalog_list') }}" class="button secondary">📦 View My Catalog</a>
+        </div>
       {% endif %}
+
 
       <div class="actions">
         <a href="/profile/edit" class="button">Edit Profile</a>

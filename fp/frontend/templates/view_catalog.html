@@ -1,23 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>{{ item.name }} - Catalog Item</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <meta charset="UTF-8">
+  <title>{{ item.name }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f8f8;
+      padding: 30px;
+    }
+    .product-container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    .price {
+      font-size: 1.3em;
+      color: #4CAF50;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 1.1em;
+    }
+    a.btn {
+      background: #007BFF;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>{{ item.name }}</h1>
-        {% if item.image_url %}
-            <img src="{{ url_for('static', filename=item.image_url) }}" alt="{{ item.name }}">
-        {% endif %}
-        <p class="price">${{ item.price }}</p>
-        <p class="description">{{ item.description }}</p>
-        <p class="vendor">Posted by: {{ item.vendor_name }}</p>
-        <p class="date">Created: {{ item.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
-        
-        <div class="actions">
-            <a href="/catalog" class="btn">Back to Catalog</a>
-        </div>
-    </div>
+  <div class="product-container">
+    <img src="{{ url_for('static', filename=item.image_url) }}" alt="{{ item.name }}">
+    <h1>{{ item.name }}</h1>
+    <p class="price">${{ item.price }}</p>
+    <p>{{ item.description }}</p>
+
+    <a href="{{ url_for('catalog_list') }}" class="btn">Volver al catálogo</a>
+  </div>
 </body>
 </html>
