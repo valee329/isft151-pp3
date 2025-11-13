@@ -53,6 +53,7 @@ def login():
             session['logged_in'] = True
             session['user_id'] = user['id']
             session['user_name'] = f"{user['name']} {user['lastname']}"
+            print(" LOGIN EXITOSO - SESIÓN:", dict(session))
             if not user_has_profile(user['id']):
                 return redirect('/complete_profile')
             return redirect('/feed')

@@ -4,7 +4,7 @@ from .config import SECRET_KEY  # changed to relative
 from .routes.auth import auth_bp
 from .db import get_db_connection
 from .repositories.user_repo import user_has_profile
-from .routes import register_routes, register_catalog_routes
+from .routes.catalog import register_catalog_routes
 
 def create_app():
     app = Flask(
@@ -22,13 +22,13 @@ def create_app():
     from .routes.vendor import vendor_bp
     from .routes.feed import feed_bp
     from .routes.health import health_bp
-
+    
     app.register_blueprint(auth_bp)
     app.register_blueprint(vendor_bp)
     app.register_blueprint(feed_bp)
     app.register_blueprint(health_bp)
 
-    register_routes(app, get_db_connection, user_has_profile)
     register_catalog_routes(app, get_db_connection)
+   
 
     return app

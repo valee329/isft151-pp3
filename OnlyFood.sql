@@ -40,3 +40,19 @@ INSERT INTO role (description)
 SELECT 'vendor' WHERE NOT EXISTS (SELECT 1 FROM role WHERE description='vendor');
 INSERT INTO role (description)
 SELECT 'user' WHERE NOT EXISTS (SELECT 1 FROM role WHERE description='user');
+
+ALTER TABLE catalog_item
+ADD COLUMN image_url VARCHAR(255) DEFAULT NULL AFTER price,
+ADD COLUMN vendor_id INT NULL AFTER image_url,
+ADD CONSTRAINT fk_catalog_user FOREIGN KEY (vendor_id)
+REFERENCES user(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+ALTER TABLE catalog_item
+MODIFY vendor_id INT NOT NULL,
+ADD CONSTRAINT fk_catalog_user FOREIGN KEY (vendor_id)
+REFERENCES user(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+

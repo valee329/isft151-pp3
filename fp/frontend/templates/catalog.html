@@ -58,12 +58,13 @@
   <a href="{{ url_for('catalog_create') }}" class="btn create-btn">+ Crear nuevo producto</a>
 
   <div class="catalog-container">
-    {% for it in items %}
+    {% for item in items %}
       <div class="card">
-        <img src="{{ url_for('static', filename=it.image_url) }}" alt="{{ item.name }}">
-        <h3>{{ it.name }}</h3>
-        <p class="price">${{ it.price }}</p>
-        <a href="{{ url_for('catalog_view', item_id=it.id) }}" class="btn">Ver detalle</a>
+        <img src="{{ url_for('static', filename=item.image_url) }}" alt="{{ item.name }}" class="product-image">
+
+        <h3>{{ item.name }}</h3>
+        <p class="price">${{ item.price }}</p>
+        <a href="{{ url_for('catalog_view', item_id=item.id) }}" class="btn">Ver detalle</a>
       </div>
     {% else %}
       <p>No hay productos cargados todavía.</p>

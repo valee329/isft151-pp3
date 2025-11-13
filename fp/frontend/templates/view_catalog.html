@@ -48,7 +48,8 @@
 </head>
 <body>
   <div class="product-container">
-    <img src="{{ url_for('static', filename=item.image_url) }}" alt="{{ item.name }}">
+    <img src="{{ url_for('static', filename='product_images/' + item.image_url) }}" alt="{{ item.name }}">
+
     <h1>{{ item.name }}</h1>
     <p class="price">${{ item.price }}</p>
     <p>{{ item.description }}</p>
