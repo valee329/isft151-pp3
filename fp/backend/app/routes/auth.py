@@ -31,10 +31,10 @@ def login():
     password = request.form.get('txtPassword')
     captcha_in = (request.form.get('captcha_input') or '').strip().upper()
 
-    # validate captcha before hitting DB
+   
     expected = (session.get('captcha_code') or '').strip().upper()
     if not captcha_in or captcha_in != expected:
-        flash('Invalid captcha.')
+        flash('Captcha inválido.')
         _new_captcha()
         return redirect('/')
 
@@ -44,7 +44,7 @@ def login():
         _new_captcha()
         return redirect('/')
 
-    cur = conn.cursor(dictionary=True, buffered=True)  # ✅ buffered evita el error
+    cur = conn.cursor(dictionary=True, buffered=True)  
     try:
         cur.execute("""
             SELECT id, name, lastname
@@ -69,11 +69,11 @@ def login():
             conn.close()
             return redirect('/feed')
 
-        flash('Invalid credentials.')
+        flash('Credentiales invalidas.')
 
     except Exception as e:
         print(f"Login error: {e}")
-        flash('Error during login.')
+        flash('Error durante el inicio de sesion.')
 
     finally:
         _new_captcha()  # rotate captcha after each attempt
@@ -91,16 +91,16 @@ def register():
         confirm_password = request.form.get('txtConfirmPassword')
 
         if not all([name, lastname, role, password, confirm_password]):
-            flash('All fields required.')
+            flash('Todos los campos son obligatorios.')
             return render_template('register.html', name=name, lastname=lastname, role=role)
 
         if password != confirm_password:
-            flash('Passwords do not match.')
+            flash('Las contraseñas no coinciden.')
             return render_template('register.html', name=name, lastname=lastname, role=role)
 
         conn = get_db_connection()
         if not conn:
-            flash('DB connection error.')
+            flash('Error de coneccion a la base de datos.')
             return render_template('register.html', name=name, lastname=lastname, role=role)
 
         cur = conn.cursor()
@@ -110,11 +110,11 @@ def register():
                 VALUES (%s, %s, %s, %s)
             """, (name, lastname, int(role), password))
             conn.commit()
-            flash('Registered successfully. Log in now.')
+            flash('Registrado correctamente. Inicia sesión ahora')
             return redirect('/')
         except Exception as e:
             print(f"Register error: {e}")
-            flash('Registration failed.')
+            flash('Error en el registro.')
         finally:
             cur.close()
             conn.close()

@@ -144,7 +144,7 @@ input:focus {
   justify-content:center;
   gap:8px;
   letter-spacing:.4px;
-  color:#fff;
+  color:#065f46;
   position:relative;
   overflow:hidden;
   transition:var(--trans);
@@ -242,7 +242,7 @@ button:hover,.btn:hover{background:#15803d}
   <div class="login-shell">
     <div class="card">
       <h1 class="brand">OnlyFood</h1>
-      <p class="subtitle">Sign In</p>
+      <p class="subtitle">Iniciar sesión</p>
 
       {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -254,15 +254,15 @@ button:hover,.btn:hover{background:#15803d}
 
       <form method="POST" action="/login" novalidate>
         <div class="field">
-          <label for="firstName">First Name</label>
-          <input id="firstName" name="txtName" placeholder="Your first name" required autocomplete="given-name">
+          <label for="firstName">Nombre</label>
+          <input id="firstName" name="txtName" placeholder="Tu nombre" required autocomplete="given-name">
         </div>
         <div class="field">
-          <label for="lastName">Last Name</label>
-            <input id="lastName" name="txtLastname" placeholder="Your last name" required autocomplete="family-name">
+          <label for="lastName">Apellido</label>
+            <input id="lastName" name="txtLastname" placeholder="Tu apellido" required autocomplete="family-name">
         </div>
         <div class="field">
-          <label for="password">Password</label>
+          <label for="password">Contraseña</label>
           <input id="password" name="txtPassword" type="password" placeholder="••••••••" required autocomplete="current-password">
         </div>
 
@@ -270,20 +270,20 @@ button:hover,.btn:hover{background:#15803d}
           <div class="captcha-box">
             <span id="captchaCode">{{ captcha_code }}</span>
           </div>
-          <button type="button" class="refresh-btn" onclick="refreshCaptcha()" aria-label="Refresh captcha">↻</button>
+          <button type="button" class="refresh-btn" onclick="refreshCaptcha()" aria-label="Refrecar captcha">↻</button>
         </div>
 
         <div class="field">
-          <label for="captcha_input">Enter code</label>
-          <input id="captcha_input" name="captcha_input" placeholder="Type the code shown" autocomplete="off" required>
+          <label for="captcha_input">Ingresa el código</label>
+          <input id="captcha_input" name="captcha_input" placeholder="Escribe el código mostrado" autocomplete="off" required>
         </div>
 
         <button type="submit" class="btn-primary">Login</button>
       </form>
 
       <div class="alt">
-        Need an account?
-        <a href="/register">Create one</a>
+        ¿Necesitas una cuenta?
+        <a href="/register">Crear uno</a>
       </div>
     </div>
     <footer>&copy; 2025 OnlyFood</footer>

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Create Catalog Item</title>
+    <title>Crear artículo del catálogo</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Create New Catalog Item</h1>
+        <h1>Crear nuevo artículo del catálogo</h1>
         
         <form action="{{ url_for('catalog_create') }}" method="POST" enctype="multipart/form-data">
             <div class="form-group">
@@ -15,26 +15,26 @@
             </div>
 
             <div class="form-group">
-                <label for="price">Price:</label>
+                <label for="price">Precio:</label>
                 <input type="number" id="price" name="price" step="0.01" required>
             </div>
 
             <div class="form-group">
-                <label for="description">Description:</label>
+                <label for="description">Descripcion:</label>
                 <textarea id="description" name="description" required></textarea>
             </div>
 
             <div class="form-group">
-                <label for="product_image">Product Image:</label>
+                <label for="product_image">Imagen del Producto:</label>
                 <input type="file" id="product_image" name="product_image" accept="image/*" required>
             </div>
 
-            <button type="submit" class="btn">Create Item</button>
+            <button type="submit" class="btn">Crear artículo</button>
         </form>
         
         <div class="actions">
-            <a href="/catalog" class="btn btn-secondary">Back to Catalog</a>
-            <a href="/profile" class="btn btn-secondary">Back to Profile</a>
+            <a href="/catalog" class="btn btn-secondary">Volver al catálogo</a>
+            <a href="/profile" class="btn btn-secondary">Volver al perfil</a>
         </div>
     </div>
 

@@ -37,10 +37,10 @@ def register_routes(app, get_db_connection, user_has_profile):
                 if not user_has_profile(user['id']):
                     return redirect('/complete_profile')
                 return redirect('/feed')
-            flash('Invalid credentials.')
+            flash('Credenciales invalidas.')
         except Exception as e:
             print(f"Login error: {e}")
-            flash('Error during login.')
+            flash('Error durante el login.')
         finally:
             cur.close()
             conn.close()
@@ -56,13 +56,13 @@ def register_routes(app, get_db_connection, user_has_profile):
             confirm_password = request.form.get('txtConfirmPassword') 
 
             if not all([name, lastname, role, password, confirm_password]):
-                flash('All fields required.')
+                flash('Todos los campos son obligatorios.')
                 return render_template('register.html')
 
             validation_errors = validate_password_requirements(password, confirm_password)
 
             if validation_errors:
-                # Si hay errores, flashea cada uno y vuelve a mostrar el formulario.
+                
                 for error in validation_errors:
                     flash(error, 'error')
                 return render_template('register.html', 
@@ -82,11 +82,11 @@ def register_routes(app, get_db_connection, user_has_profile):
                     VALUES (%s, %s, %s, %s)
                 """, (name, lastname, role, password))
                 conn.commit()
-                flash('Registered successfully. Log in now.')
+                flash('Registrado correctamente. Inicia sesión ahora!')
                 return redirect('/')
             except Exception as e:
                 print(f"Register error: {e}")
-                flash('Registration failed.')
+                flash('Error en el registro')
             finally:
                 cur.close()
                 conn.close()
@@ -120,7 +120,7 @@ def register_routes(app, get_db_connection, user_has_profile):
                 return redirect('/feed')
             except Exception as e:
                 print(f"Profile save error: {e}")
-                flash('Could not save profile.')
+                flash('No se pudo guardar el perfil.')
             finally:
                 cur.close()
                 conn.close()
@@ -204,7 +204,7 @@ def register_routes(app, get_db_connection, user_has_profile):
 
         conn = get_db_connection()
         if not conn:
-            flash('DB connection error.')
+            flash('Error de conexión a la base de datos.')
             return redirect('/feed')
 
         cur = conn.cursor()
@@ -216,7 +216,7 @@ def register_routes(app, get_db_connection, user_has_profile):
             conn.commit()
         except Exception as e:
             print(f"Create post error: {e}")
-            flash('Could not create post.')
+            flash('No se pudo crear la publicación.')
         finally:
             cur.close()
             conn.close()
@@ -230,14 +230,14 @@ def register_routes(app, get_db_connection, user_has_profile):
     @app.route('/delete_profile', methods=['POST'])
     def delete_profile():
         if not session.get('logged_in'):
-            flash('You must be logged in to delete your profile.')
+            flash('Debes iniciar sesión para eliminar tu perfil.')
             return redirect('/')
         
         user_id = session.get('user_id')
         
         conn = get_db_connection()
         if not conn:
-            flash('DB connection error.')
+            flash('Error de conexión a la base de datos.')
             return redirect('/profile')
 
         cur = conn.cursor()
@@ -247,12 +247,12 @@ def register_routes(app, get_db_connection, user_has_profile):
             conn.commit()
             
             session.clear()
-            flash('Your account has been successfully deleted.')
+            flash('Tu cuenta ha sido eliminada correctamente.')
             return redirect('/')
         
         except Exception as e:
             print(f"Delete profile error: {e}")
-            flash('An error occurred while deleting the profile.')
+            flash('Ocurrió un error al eliminar el perfil.')
             return redirect('/profile')
         
         finally:
@@ -264,13 +264,12 @@ def validate_password_requirements(password, confirm_password):
     #Verifica si la contraseña cumple con los requisitos y si coincide con la confirmación.
         errors = []
         
-        # Requisitos
         MIN_LENGTH = 8
        
         REQUIRES_UPPER = re.compile(r'[A-Z]')
         REQUIRES_LOWER = re.compile(r'[a-z]')
         REQUIRES_DIGIT = re.compile(r'\d')
-        REQUIRES_SPECIAL = re.compile(r'[!@#$%^&*()_+={}\[\]:;"\'<,>.?/\\|]') # Opcional: Caracter especial
+        REQUIRES_SPECIAL = re.compile(r'[!@#$%^&*()_+={}\[\]:;"\'<,>.?/\\|]') 
 
         if len(password) < MIN_LENGTH:
             errors.append(f"La contraseña debe tener al menos {MIN_LENGTH} caracteres.")

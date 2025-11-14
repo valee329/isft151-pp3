@@ -30,8 +30,8 @@ a.button:hover{background:#1ea34f}
 <header>
   <div><strong>OnlyFood</strong> - Feed</div>
   <nav>
-    <a href="/profile" style="color:#fff;margin-right:14px;">My Profile</a>
-    <a href="/logout" style="color:#fff;">Logout</a>
+    <a href="/profile" style="color:#fff;margin-right:14px;">Mi perfil</a>
+    <a href="/logout" style="color:#fff;">Cerrar Sesion</a>
   </nav>
 </header>
 <main>
@@ -57,7 +57,7 @@ a.button:hover{background:#1ea34f}
         {% if v.location %}<p><small>📍 {{ v.location }}</small></p>{% endif %}
       </div>
     {% else %}
-      <div class="card" style="grid-column:1/-1;text-align:center;">No vendors yet.</div>
+      <div class="card" style="grid-column:1/-1;text-align:center;">Aún no hay vendedores</div>
     {% endfor %}
   </div>
 </main>

@@ -62,7 +62,7 @@ def register_catalog_routes(app, get_db_connection):
     @app.route('/catalog/create', methods=['GET', 'POST'])
     def catalog_create():
         """Permite crear un nuevo producto en el catálogo."""
-        # Verificar que el usuario esté logueado
+        
         if not session.get('logged_in'):
             flash('Debes iniciar sesión para crear un producto.')
             return redirect('/')
@@ -72,7 +72,7 @@ def register_catalog_routes(app, get_db_connection):
             description = request.form.get('description')
             price = request.form.get('price')
 
-            # Validar imagen subida
+           
             file = request.files.get('product_image')
             if not file or file.filename == '':
                 flash('Por favor selecciona una imagen.')
@@ -82,32 +82,32 @@ def register_catalog_routes(app, get_db_connection):
                 flash('Formato de imagen no permitido (usa png, jpg, jpeg o gif).')
                 return redirect(request.url)
 
-            # Asegurar nombre de archivo único y seguro
+            
             filename = secure_filename(file.filename)
             unique_name = f"{uuid.uuid4().hex}_{filename}"
 
-            # Guardar imagen dentro de static/product_images
+            
             image_folder = os.path.join(current_app.static_folder, 'product_images')
             os.makedirs(image_folder, exist_ok=True)
 
             file_path = os.path.join(image_folder, unique_name)
             file.save(file_path)
 
-            # Ruta relativa para guardar en la base
+            
             db_image_path = f"product_images/{unique_name}"
 
-            # Obtener ID del usuario logueado
+            
             vendor_id = session.get('user_id')
             if not vendor_id:
                 flash('Error: No se encontró el usuario logueado.')
                 return redirect('/')
 
-            # Guardar en la base
+            
             conn = get_db_connection()
             if conn:
                 try:
                     catalog_repo.create_item(conn, name, description, price, db_image_path, vendor_id)
-                    #flash('Producto creado correctamente.')
+                    
                     return redirect('/catalog')
                 except Exception as e:
                     print(f"Catalog create error: {e}")
@@ -116,5 +116,5 @@ def register_catalog_routes(app, get_db_connection):
                 finally:
                     conn.close()
 
-        # Si es GET, simplemente mostrar el formulario
+      
         return render_template('create_catalog.html')

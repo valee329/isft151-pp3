@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Profile - OnlyFood</title>
+<title>Perfil - OnlyFood</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
 body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:#ffffff;min-height:100vh;color:#17353a;}
@@ -34,8 +34,8 @@ h1{margin:0 0 4px;font-size:1.9rem;color:#0f2e1f;}
   <div><strong>OnlyFood</strong></div>
   <nav>
     <a href="/feed">Feed</a>
-    <a href="/profile/edit">Edit</a>
-    <a href="/logout">Logout</a>
+    <a href="/profile/edit">Editar</a>
+    <a href="/logout">Cerrar sesión</a>
   </nav>
 </header>
 <div class="container">
@@ -64,7 +64,7 @@ h1{margin:0 0 4px;font-size:1.9rem;color:#0f2e1f;}
       {% if user.bio %}
         <div class="bio">{{ user.bio }}</div>
       {% else %}
-        <div class="empty">No bio yet.</div>
+        <div class="empty">Aún no hay biografía.</div>
       {% endif %}
 
       {% if user.location %}
@@ -73,23 +73,23 @@ h1{margin:0 0 4px;font-size:1.9rem;color:#0f2e1f;}
 
       {% if user.role == 'vendor' %}
         <div class="profile-actions">
-        <a href="{{ url_for('catalog_create') }}" class="button">➕ Create Catalog</a>
-        <a href="{{ url_for('catalog_list') }}" class="button secondary">📦 View My Catalog</a>
+        <a href="{{ url_for('catalog_create') }}" class="button">➕ Crear Catalog</a>
+        <a href="{{ url_for('catalog_list') }}" class="button secondary">📦 Ver mi Catalog</a>
         </div>
       {% endif %}
 
 
       <div class="actions">
-        <a href="/profile/edit" class="button">Edit Profile</a>
-        <a href="/feed" class="button secondary">Back to Feed</a>
+        <a href="/profile/edit" class="button">Editar Perfil</a>
+        <a href="/feed" class="button secondary">Volver a Feed</a>
         <form action="/delete_profile" method="POST" onsubmit="return confirm('Delete your account? This cannot be undone.');" style="display:inline;">
-          <button class="button secondary" type="submit">Delete Account</button>
+          <button class="button secondary" type="submit">Eliminar cuenta</button>
         </form>
       </div>
     </div>
   </div>
 {% else %}
-  <p>User not found.</p>
+  <p>Usuario no encontrado.</p>
 {% endif %}
 </div>
 </body>

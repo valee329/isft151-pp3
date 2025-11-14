@@ -18,7 +18,7 @@ def complete_profile():
         avatar_url = request.form.get('avatar_url') or None
         if insert_profile(user_id, bio, location, avatar_url):
             return redirect('/feed')
-        flash('Could not save profile.')
+        flash('No se pudo guardar el perfil.')
     return render_template('profile.html')
 
 @vendor_bp.route('/profile')

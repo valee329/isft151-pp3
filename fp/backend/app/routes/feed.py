@@ -31,5 +31,5 @@ def feed():
     cur.close(); conn.close()
 
     if not vendors:
-        flash('No vendors found with role id 1.')
+        flash('No se encontraron proveedores con el rol ID 1.')
     return render_template('feed.html', vendors=vendors)

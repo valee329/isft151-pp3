@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Complete Profile</title>
+<title>Complete Perfil</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
 body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#ffffff;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:50px 20px;color:#17353a;}
@@ -26,7 +26,7 @@ a.secondary:hover{background:#f0fdf4}
 </head>
 <body>
 <div class="container">
-  <h1>Complete Your Profile</h1>
+  <h1>Completa tu Perfil</h1>
 
   {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -46,25 +46,25 @@ a.secondary:hover{background:#f0fdf4}
         {% endif %}
       </div>
       <div style="flex:1;min-width:220px;">
-        <label for="avatar_url">Avatar Image URL</label>
+        <label for="avatar_url">URL de la imagen del avatar</label>
         <input id="avatar_url" name="avatar_url" placeholder="https://..." value="{{ user.avatar_url if user and user.avatar_url }}">
-        <div class="hint">Paste an image URL to preview.</div>
+        <div class="hint">Pega una URL de imagen para vista previa.</div>
       </div>
     </div>
 
     <div>
-      <label for="bio">Short Bio</label>
+      <label for="bio">Biografía corta</label>
       <textarea id="bio" name="bio" placeholder="Tell people about your food, style, experience...">{{ user.bio if user and user.bio }}</textarea>
     </div>
 
     <div>
-      <label for="location">Location</label>
+      <label for="location">Ubicación</label>
       <input id="location" name="location" placeholder="City / Area" value="{{ user.location if user and user.location }}">
     </div>
 
     <div class="actions">
-      <button type="submit">Save Profile</button>
-      <a href="/feed" class="secondary">Skip</a>
+      <button type="submit">Guardar</button>
+      <a href="/feed" class="secondary">Saltar</a>
     </div>
   </form>
 </div>

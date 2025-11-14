@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Register - OnlyFood</title>
+<title>Registrarse - OnlyFood</title>
 <style>
 body {font-family:Arial, sans-serif;background:#f6fef8;margin:0;display:flex;justify-content:center;align-items:center;height:100vh;}
 .container {max-width:420px;margin:60px auto;background:#ffffff;padding:26px;border-radius:10px;box-shadow:0 8px 24px rgba(16,24,40,.06);border:1px solid #e6f3ea;}
@@ -18,7 +18,7 @@ a{color:#1ea34f}
 </head>
 <body>
   <div class="container">
-    <h1>Create Account</h1>
+    <h1>Crear cuenta</h1>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
         {% for m in messages %}
@@ -31,15 +31,15 @@ a{color:#1ea34f}
       <input type="text" name="txtLastname" placeholder="Last Name" required>
       <select name="txtRole" required>
         <option value="" disabled selected>Select Role</option>
-        <option value="1">Vendor</option>
-        <option value="2">User</option>
+        <option value="1">Emprendedor</option>
+        <option value="2">Consumidor</option>
       </select>
       <input type="password" name="txtPassword" placeholder="Password" required>
       <input type="password" name="txtConfirmPassword" placeholder="Confirm Password" required>
-      <button type="submit">Register</button>
+      <button type="submit">Registrarse</button>
     </form>
     <div style="text-align:center;margin-top:12px;">
-      <a href="/">Back to login</a>
+      <a href="/">Volver al login</a>
     </div>
   </div>
 </body>
